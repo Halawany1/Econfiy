@@ -6,6 +6,7 @@ import 'package:econfiy/shared/component/material_button.dart';
 import 'package:econfiy/shared/component/navigations.dart';
 import 'package:econfiy/shared/component/row_sign_in_third_services.dart';
 import 'package:econfiy/shared/component/text_form_field.dart';
+import 'package:econfiy/shared/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,11 +31,27 @@ class LogInScreen extends StatelessWidget {
       return emailRegex.hasMatch(email);
     }
 
-    return BlocBuilder<AuthenticationCubit, AuthenticationState>(
+    return BlocConsumer<AuthenticationCubit, AuthenticationState>(
+      listener: (context, state) {
+        if(state is SuccessUserLoginState){
+          SnackBar(
+            content:Text(
+              'Login Successful',
+            ),
+          );
+        }
+        if(state is ErrorUserLoginState){
+          SnackBar(
+            content:Text(
+              'Login Failed',
+            ),
+          );
+        }
+      },
       builder: (context, state) {
         var cubit=context.read<AuthenticationCubit>();
         return Scaffold(
-          appBar: AppBar(),
+
           body: Form(
             key: formKey,
             child: SingleChildScrollView(
@@ -44,6 +61,7 @@ class LogInScreen extends StatelessWidget {
                     vertical: 20.h),
                 child: Column(
                   children: [
+                    SizedBox(height: 50.h,),
                     Image.asset('assets/images/wavelogin.png'),
                     SizedBox(
                       height: 25.h,
@@ -113,11 +131,17 @@ class LogInScreen extends StatelessWidget {
                       height: 50.h,
                     ),
 
-                    BuildMaterialButton(
+                   state is LoadingUserLoginState?
+                    Center(child:
+                    CircularProgressIndicator(color:
+                    ColorConstant.generalColor ,))
+                    :BuildMaterialButton(
                       text: 'Log In',
                       onPress: () {
                         if (formKey.currentState!.validate()) {
-                          pushReplacement(context, const LayoutScreen());
+                          // cubit.userLogin(email: emailController.text,
+                          //     password: passwordController.text);
+                         pushReplacement(context, const LayoutScreen());
                         }
                       },
                     ),

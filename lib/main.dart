@@ -6,13 +6,21 @@ import 'package:econfiy/controller/layout/layout_cubit.dart';
 import 'package:econfiy/controller/onboarding/on_boarding_cubit.dart';
 import 'package:econfiy/controller/product/product_cubit.dart';
 import 'package:econfiy/modules/onboarding/onboarding_screen.dart';
+import 'package:econfiy/shared/network/bloc_observer.dart';
+import 'package:econfiy/shared/network/local.dart';
+import 'package:econfiy/shared/network/remote.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
+  await CacheHelper.init();
+  await DioHelper.init();
+  Bloc.observer = MyBlocObserver();
 
   runApp(const MyApp());
 }

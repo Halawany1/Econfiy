@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:econfiy/modules/all_reviews/all_reviews.dart';
 import 'package:econfiy/shared/constant/color.dart';
 import 'package:econfiy/controller/product/product_cubit.dart';
 import 'package:econfiy/modules/product_analysis/product_analysis_screen.dart';
@@ -116,7 +117,50 @@ class ProductDetailsScreen extends StatelessWidget {
                           ),
                           Spacer(),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                backgroundColor: Colors.white,
+                                builder: (context) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(25.r),
+                                          topRight: Radius.circular(25.r)),
+                                      color: Color(0xFFF9F9F9),
+                                    ),
+                                    width: double.infinity,
+                                    height: 400.h,
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            height: 15.h,
+                                          ),
+                                          Text('FakeReviews',
+                                              style: GoogleFonts.poppins(
+                                                  color: Color(0xFF223263),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 22.sp)),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          Image.asset(
+                                              width: double.infinity,
+                                              height: 400.h,
+                                              'assets/images/Product Detail.png'),
+                                          SizedBox(
+                                            height: 20.h,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                             child: Text('See FakeReviews',
                                 style: GoogleFonts.poppins(
                                     color: ColorConstant.generalColor,
@@ -157,16 +201,46 @@ Upgrade your winter wardrobe with the Black Winter T-Shirt and experience unmatc
                         style: GoogleFonts.poppins(
                             fontSize: 12.sp, color: Color(0xFF9098B1)),
                       ),
-                      SizedBox(height: 40.h,),
-                      BuildMaterialButton(text: 'Open in Amazon',
-                        onPress: () {
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Reviews',
+                              style: GoogleFonts.poppins(
 
-                        },),
-                      SizedBox(height: 50.h,),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.sp)),
+                          InkWell(
+                            onTap: () {
+                              push(context, const AllReviewsScreen());
+                            },
+                            child: Text('See All Reviews',
+                                style: GoogleFonts.poppins(
+                                    color: ColorConstant.generalColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.sp)),
+                          )
+                        ],
+                      ),
+                      Image.asset('assets/images/Review Product.png'),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      SizedBox(
+                        height: 40.h,
+                      ),
+                      BuildMaterialButton(
+                        text: 'Open in Amazon',
+                        onPress: () {},
+                      ),
+                      SizedBox(
+                        height: 50.h,
+                      ),
                     ],
                   ),
                 ),
-
               ],
             ),
           ),

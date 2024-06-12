@@ -1,3 +1,4 @@
+import 'package:econfiy/modules/log_in/log_in_screen.dart';
 import 'package:econfiy/modules/sign_up/sign_up_screen.dart';
 import 'package:econfiy/shared/component/material_button.dart';
 import 'package:econfiy/shared/component/navigations.dart';
@@ -28,7 +29,7 @@ class GetStartScreen extends StatelessWidget {
               },),
           SizedBox(height: 20.h,),
           TextButton(onPressed: () {
-
+            pushReplacement(context, const LogInScreen());
           },
               child: Text('I already have an account?',
 
