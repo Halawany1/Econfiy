@@ -19,4 +19,13 @@ class ErrorUserLoginState extends AuthenticationState {
   final String error;
   ErrorUserLoginState(this.error);
 }
+class LoadingUserRegisterState extends AuthenticationState {}
+
+class SuccessUserRegisterState extends AuthenticationState {}
+
+class ErrorUserRegisterState extends AuthenticationState {
+
+  final String error;
+  ErrorUserRegisterState(this.error);
+}
 

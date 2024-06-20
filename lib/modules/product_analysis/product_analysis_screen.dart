@@ -1,4 +1,4 @@
-import 'package:econfiy/controller/product/product_cubit.dart';
+import 'package:econfiy/controller/home/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,9 +9,9 @@ class ProductAnalysisScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductCubit, ProductState>(
+    return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        var cubit=context.read<ProductCubit>();
+        var cubit=context.read<HomeCubit>();
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,

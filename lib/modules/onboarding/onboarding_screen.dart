@@ -1,6 +1,8 @@
+import 'package:econfiy/shared/constant/app.dart';
 import 'package:econfiy/shared/constant/color.dart';
 import 'package:econfiy/controller/onboarding/on_boarding_cubit.dart';
 import 'package:econfiy/modules/get_start/get_start_screen.dart';
+import 'package:econfiy/shared/network/local.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -64,7 +66,9 @@ class OnBoardingScreen extends StatelessWidget {
                       TextButton(onPressed: () {
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) => const GetStartScreen(),));
-                      },
+                        CacheHelper.saveData(key: AppConstant.onBoarding,
+                            value: true);
+                        },
                           child: Text('SKIP',
                             style: GoogleFonts.poppins(
                                 fontSize: 18.sp,
@@ -77,6 +81,8 @@ class OnBoardingScreen extends StatelessWidget {
                           if (cubit.index == 2) {
                             Navigator.pushReplacement(context, MaterialPageRoute(
                               builder: (context) => const GetStartScreen(),));
+                            CacheHelper.saveData(key: AppConstant.onBoarding,
+                                value: true);
                           }else{
                             cubit.changeCurrentScreen(2);
                           }

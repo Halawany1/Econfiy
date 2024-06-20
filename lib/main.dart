@@ -1,10 +1,14 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:econfiy/controller/profile/profile_cubit.dart';
+import 'package:econfiy/controller/search/search_cubit.dart';
+import 'package:econfiy/layout/layout_screen.dart';
+import 'package:econfiy/modules/log_in/log_in_screen.dart';
+import 'package:econfiy/shared/constant/app.dart';
 import 'package:econfiy/shared/constant/color.dart';
 import 'package:econfiy/controller/authentication/authentication_cubit.dart';
 import 'package:econfiy/controller/home/home_cubit.dart';
 import 'package:econfiy/controller/layout/layout_cubit.dart';
 import 'package:econfiy/controller/onboarding/on_boarding_cubit.dart';
-import 'package:econfiy/controller/product/product_cubit.dart';
 import 'package:econfiy/modules/onboarding/onboarding_screen.dart';
 import 'package:econfiy/shared/network/bloc_observer.dart';
 import 'package:econfiy/shared/network/local.dart';
@@ -20,13 +24,27 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   await CacheHelper.init();
   await DioHelper.init();
+//CacheHelper.deleteAllData();
   Bloc.observer = MyBlocObserver();
+  Widget? widget;
+  if(CacheHelper.getData(key: AppConstant.token) != null){
+    widget=const LayoutScreen();
+  }else{
+    if(CacheHelper.getData(key: AppConstant.onBoarding) != null){
+      widget=const OnBoardingScreen();
+    }else{
+      widget=const LogInScreen();
+    }
 
-  runApp(const MyApp());
+  }
+  print(CacheHelper.getData(key: AppConstant.token));
+  runApp( MyApp(widget: widget,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
+   MyApp({super.key, required this.widget});
+  Widget widget;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -38,9 +56,11 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(create: (context) => OnBoardingCubit(),),
             BlocProvider(create: (context) => AuthenticationCubit(),),
-            BlocProvider(create: (context) => HomeCubit(),),
+            BlocProvider(create: (context) => HomeCubit()..
+            getProducts()..getRecommendProducts()..getFavourites(),),
             BlocProvider(create: (context) => LayoutCubit(),),
-            BlocProvider(create: (context) => ProductCubit(),)
+            BlocProvider(create: (context) => SearchCubit(),),
+            BlocProvider(create: (context) => ProfileCubit()..getProfile(),),
           ],
           child: MaterialApp(
             home: AnimatedSplashScreen(
@@ -49,7 +69,7 @@ class MyApp extends StatelessWidget {
               backgroundColor: Colors.white,
               splashIconSize:150.h ,
               splash: "assets/images/splash.png",
-              nextScreen: const OnBoardingScreen(),
+              nextScreen: widget,
             ),
 
             debugShowCheckedModeBanner: false,

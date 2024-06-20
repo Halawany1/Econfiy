@@ -5,6 +5,7 @@ import 'package:econfiy/modules/sign_up/sign_up_screen.dart';
 import 'package:econfiy/shared/component/material_button.dart';
 import 'package:econfiy/shared/component/navigations.dart';
 import 'package:econfiy/shared/component/row_sign_in_third_services.dart';
+import 'package:econfiy/shared/component/snak_bar_component.dart';
 import 'package:econfiy/shared/component/text_form_field.dart';
 import 'package:econfiy/shared/constant/color.dart';
 import 'package:flutter/material.dart';
@@ -34,18 +35,11 @@ class LogInScreen extends StatelessWidget {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
         if(state is SuccessUserLoginState){
-          SnackBar(
-            content:Text(
-              'Login Successful',
-            ),
-          );
+         pushReplacement(context, const LayoutScreen());
         }
         if(state is ErrorUserLoginState){
-          SnackBar(
-            content:Text(
-              'Login Failed',
-            ),
-          );
+         showMessageResponse(message: state.error,
+             context: context, success: false);
         }
       },
       builder: (context, state) {
@@ -139,9 +133,8 @@ class LogInScreen extends StatelessWidget {
                       text: 'Log In',
                       onPress: () {
                         if (formKey.currentState!.validate()) {
-                          // cubit.userLogin(email: emailController.text,
-                          //     password: passwordController.text);
-                         pushReplacement(context, const LayoutScreen());
+                          cubit.userLogin(email: emailController.text,
+                              password: passwordController.text);
                         }
                       },
                     ),

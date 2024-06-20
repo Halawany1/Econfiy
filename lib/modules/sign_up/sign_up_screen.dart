@@ -1,3 +1,4 @@
+import 'package:econfiy/shared/component/snak_bar_component.dart';
 import 'package:econfiy/shared/constant/color.dart';
 import 'package:econfiy/controller/authentication/authentication_cubit.dart';
 import 'package:econfiy/layout/layout_screen.dart';
@@ -10,7 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+bool isValidEmail(String email) {
+  // Regular expression for validating email format
+  final RegExp emailRegex =
+  RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$', caseSensitive: false);
+  return emailRegex.hasMatch(email);
+}
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
@@ -22,14 +28,18 @@ class SignUpScreen extends StatelessWidget {
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
     var formKey = GlobalKey<FormState>();
-    bool isValidEmail(String email) {
-      // Regular expression for validating email format
-      final RegExp emailRegex =
-          RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$', caseSensitive: false);
-      return emailRegex.hasMatch(email);
-    }
 
-    return BlocBuilder<AuthenticationCubit, AuthenticationState>(
+
+    return BlocConsumer<AuthenticationCubit, AuthenticationState>(
+      listener: (context, state) {
+        if(state is SuccessUserRegisterState){
+          pushReplacement(context, const LayoutScreen());
+        }
+        if(state is ErrorUserRegisterState){
+          showMessageResponse(message: state.error,
+              context: context, success: false);
+        }
+      },
       builder: (context, state) {
         var cubit=context.read<AuthenticationCubit>();
         return Scaffold(
@@ -176,11 +186,15 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(
                       height: 20.h,
                     ),
-                    BuildMaterialButton(
+                    state is LoadingUserRegisterState?
+                    const Center(child: CircularProgressIndicator(color: ColorConstant.generalColor,))
+                    :BuildMaterialButton(
                       text: 'Creat Account',
                       onPress: () {
                         if (formKey.currentState!.validate()&&cubit.check) {
-                          pushReplacement(context, const LayoutScreen());
+                          cubit.userSignUp(email: emailController.text,
+                              name: nameController.text,
+                              password: passwordController.text);
                         }
                       },
                     ),
