@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../controller/layout/layout_cubit.dart';
 bool isValidEmail(String email) {
   // Regular expression for validating email format
   final RegExp emailRegex =
@@ -33,6 +35,7 @@ class SignUpScreen extends StatelessWidget {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
         if(state is SuccessUserRegisterState){
+          LayoutCubit.get(context).changeIndexScreen(0);
           pushReplacement(context, const LayoutScreen());
         }
         if(state is ErrorUserRegisterState){

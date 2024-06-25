@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:econfiy/models/analysis_model.dart';
 import 'package:econfiy/models/favourite_model.dart';
 import 'package:econfiy/models/product_by_id_model.dart';
 import 'package:econfiy/models/product_model.dart';
 import 'package:econfiy/models/recent_product_model.dart';
-import 'package:econfiy/models/reviews_analysis_model.dart';
 import 'package:econfiy/models/reviews_model.dart';
 import 'package:econfiy/shared/constant/api.dart';
 import 'package:econfiy/shared/constant/app.dart';
@@ -100,7 +100,7 @@ class HomeCubit extends Cubit<HomeState> {
     });
   }
 
-  ReviewsAnalysisModel? reviewsAnalysisModel;
+  AnalysisModel? analysisModel;
   void getReviewAnalysis(int id) {
     emit(LoadingGetReviewAnalysisState());
     DioHelper.getData(url: ApiConstant.reviewAnalysis,
@@ -109,7 +109,7 @@ class HomeCubit extends Cubit<HomeState> {
         "product_id":id
       }
     ).then((value) {
-      reviewsAnalysisModel = ReviewsAnalysisModel.fromJson(value.data);
+      analysisModel = AnalysisModel.fromJson(value.data);
       emit(SuccessGetReviewAnalysisState());
     }).catchError((error) {
       emit(ErrorGetReviewAnalysisState());

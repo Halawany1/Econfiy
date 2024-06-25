@@ -166,8 +166,8 @@ class ProductDetailsScreen extends StatelessWidget {
                                                     GoogleFonts.poppins(fontWeight:
                                                     FontWeight.bold,fontSize: 15.sp),),
                                                     SizedBox(height: 10.h,),
-                                                    BuildRating(rate: double.parse(cubit.reviewsAnalysisModel!.data!
-                                                        .fakePercentage.toStringAsFixed(2)),
+                                                    BuildRating(rate: double.parse(cubit.analysisModel!.data!
+                                                        .fakePercentage!.toStringAsFixed(2)),
                                                         fontSize: 15.sp,
                                                         iconSize: 25.r),
                                                     SizedBox(height: 25.h,),
@@ -175,8 +175,8 @@ class ProductDetailsScreen extends StatelessWidget {
                                                     GoogleFonts.poppins(fontWeight:
                                                     FontWeight.bold,fontSize: 15.sp),),
                                                     SizedBox(height: 10.h,),
-                                                    BuildRating(rate: double.parse(cubit.reviewsAnalysisModel!.data!
-                                                        .ratingAfterFakeFilter.toStringAsFixed(2)),
+                                                    BuildRating(rate: double.parse(cubit.analysisModel!.data!
+                                                        .ratingAfterFakeFilter!.toStringAsFixed(2)),
                                                         fontSize: 15.sp,
                                                         iconSize: 25.r)
                                                   ],

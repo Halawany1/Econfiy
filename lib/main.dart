@@ -24,13 +24,13 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   await CacheHelper.init();
   await DioHelper.init();
-//CacheHelper.deleteAllData();
+  CacheHelper.deleteAllData();
   Bloc.observer = MyBlocObserver();
   Widget? widget;
   if(CacheHelper.getData(key: AppConstant.token) != null){
     widget=const LayoutScreen();
   }else{
-    if(CacheHelper.getData(key: AppConstant.onBoarding) != null){
+    if(CacheHelper.getData(key: AppConstant.onBoarding) == null){
       widget=const OnBoardingScreen();
     }else{
       widget=const LogInScreen();
@@ -77,7 +77,6 @@ class MyApp extends StatelessWidget {
               appBarTheme: const AppBarTheme(
                 backgroundColor: Colors.white
               ),
-              backgroundColor: Colors.black,
                 scaffoldBackgroundColor: Colors.white,
               cardColor: ColorConstant.cardColor,
               hoverColor: ColorConstant.boxSignInServiceColor,
@@ -89,7 +88,7 @@ class MyApp extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     fontSize: 16.sp
                 )
-              )
+              ),/* colorScheme: ColorScheme(background: Colors.black)*/
             ),
             themeMode: ThemeMode.light,
 

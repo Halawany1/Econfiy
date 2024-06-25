@@ -4,12 +4,14 @@ import 'package:econfiy/modules/home/home_screen.dart';
 import 'package:econfiy/modules/profile/profile_screen.dart';
 import 'package:econfiy/modules/search/search_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
 part 'layout_state.dart';
 
 class LayoutCubit extends Cubit<LayoutState> {
   LayoutCubit() : super(LayoutInitial());
+  static LayoutCubit get(context) => BlocProvider.of(context);
 
   List<Widget> screens=const[
     HomeScreen(),

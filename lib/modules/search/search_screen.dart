@@ -1,4 +1,7 @@
+import 'package:econfiy/controller/home/home_cubit.dart';
 import 'package:econfiy/controller/search/search_cubit.dart';
+import 'package:econfiy/modules/product_details/product_details_screen.dart';
+import 'package:econfiy/shared/component/navigations.dart';
 import 'package:econfiy/shared/component/product.dart';
 import 'package:econfiy/shared/component/snak_bar_component.dart';
 import 'package:econfiy/shared/constant/color.dart';
@@ -73,142 +76,151 @@ class SearchScreen extends StatelessWidget {
                 if(cubit.searchProductModel!=null)
                  Padding(
                    padding:  EdgeInsets.all(15.h),
-                   child: Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r)),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
+                   child: InkWell(
+                     onTap: () {
+                       push(context,
+                           const ProductDetailsScreen());
+                       HomeCubit.get(context).getProductById(cubit.searchProductModel!.data!.product!.id!);
+                       HomeCubit.get(context).getAllReviews(cubit.searchProductModel!.data!.product!.id!);
+                       HomeCubit.get(context).getReviewAnalysis(cubit.searchProductModel!.data!.product!.id!);
+                     },
+                     child: Card(
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.r)),
-                      width: 150.w,
-                      height: 240.h,
-                      child: Column(
-                        children: [
-                          Stack(
-                            alignment: Alignment.bottomRight,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8.r),
-                                child: Image.network(
-                                    width: 150.w,
-                                    height: 128.h,
-                                    cubit.searchProductModel!.data!.product!
-                                        .image!),
-                              ),
-                              Positioned(
-                                right: 5.w,
-                                bottom: 5.w,
-                                child: CircleAvatar(
-                                  radius: 12.r,
-                                  backgroundColor: Colors.white,
-                                  child: Icon(
-                                    size: 15.r,
-                                    SolarIconsOutline.heart,
-                                    color: ColorConstant.generalColor,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5.h,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 6.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8.r)),
+                        width: 150.w,
+                        height: 240.h,
+                        child: Column(
+                          children: [
+                            Stack(
+                              alignment: Alignment.bottomRight,
                               children: [
-                                Text(
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  cubit.searchProductModel!.data!.product!.name!,
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w500),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  child: Image.network(
+                                      width: 150.w,
+                                      height: 128.h,
+                                      cubit.searchProductModel!.data!.product!
+                                          .image!),
                                 ),
-                                Text(
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  cubit.searchProductModel!.data!.product!
-                                      .shortDescription!,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 10.sp,
+                                Positioned(
+                                  right: 5.w,
+                                  bottom: 5.w,
+                                  child: CircleAvatar(
+                                    radius: 12.r,
+                                    backgroundColor: Colors.white,
+                                    child: Icon(
+                                      size: 15.r,
+                                      SolarIconsOutline.heart,
+                                      color: ColorConstant.generalColor,
+                                    ),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Row(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${cubit.searchProductModel!.data!.product!.price!} EG',
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        SizedBox(
-                                          height: 5.h,
-                                        ),
-                                        Row(
-                                          children: [
-                                            RatingBar.builder(
-                                              initialRating: cubit
-                                                  .searchProductModel!
-                                                  .data!
-                                                  .product!
-                                                  .averageRating!,
-                                              itemSize: 12.r,
-                                              minRating: cubit.searchProductModel!
-                                                  .data!.product!.averageRating!,
-                                              direction: Axis.horizontal,
-                                              allowHalfRating: true,
-                                              itemCount: 5,
-                                              itemPadding: EdgeInsets.symmetric(
-                                                  horizontal: 1.w),
-                                              itemBuilder: (context, _) =>
-                                                  const Icon(
-                                                Icons.star,
-                                                color: Colors.amber,
-                                              ),
-                                              unratedColor: Colors.grey,
-                                              onRatingUpdate: (rating) {
-                                                print(rating);
-                                              },
-                                            ),
-                                            SizedBox(
-                                              width: 2.w,
-                                            ),
-                                            Text(
-                                              '(${cubit.searchProductModel!.data!.product!.averageRating!})',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 10.sp,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    Spacer(),
-                                    Image.network(
-                                      cubit.searchProductModel!.data!.product!
-                                          .brand!.icon!,
-                                      width: 30.w,
-                                      height: 30.w,
-                                    ),
-                                  ],
-                                )
                               ],
                             ),
-                          )
-                        ],
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 6.w),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    cubit.searchProductModel!.data!.product!.name!,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  Text(
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    cubit.searchProductModel!.data!.product!
+                                        .shortDescription!,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 10.sp,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${cubit.searchProductModel!.data!.product!.price!} EG',
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          SizedBox(
+                                            height: 5.h,
+                                          ),
+                                          Row(
+                                            children: [
+                                              RatingBar.builder(
+                                                initialRating: cubit
+                                                    .searchProductModel!
+                                                    .data!
+                                                    .product!
+                                                    .averageRating!,
+                                                itemSize: 12.r,
+                                                minRating: cubit.searchProductModel!
+                                                    .data!.product!.averageRating!,
+                                                direction: Axis.horizontal,
+                                                allowHalfRating: true,
+                                                itemCount: 5,
+                                                itemPadding: EdgeInsets.symmetric(
+                                                    horizontal: 1.w),
+                                                itemBuilder: (context, _) =>
+                                                    const Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                ),
+                                                unratedColor: Colors.grey,
+                                                onRatingUpdate: (rating) {
+                                                  print(rating);
+                                                },
+                                              ),
+                                              SizedBox(
+                                                width: 2.w,
+                                              ),
+                                              Text(
+                                                '(${cubit.searchProductModel!.data!.product!.averageRating!})',
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 10.sp,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Image.network(
+                                        cubit.searchProductModel!.data!.product!
+                                            .brand!.icon!,
+                                        width: 30.w,
+                                        height: 30.w,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                                   ),
+                                     ),
+                   ),
                  ),
 
               ],

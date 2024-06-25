@@ -1,4 +1,5 @@
 import 'package:econfiy/controller/authentication/authentication_cubit.dart';
+import 'package:econfiy/controller/layout/layout_cubit.dart';
 import 'package:econfiy/layout/layout_screen.dart';
 import 'package:econfiy/modules/forget_password/forget_password_screen.dart';
 import 'package:econfiy/modules/sign_up/sign_up_screen.dart';
@@ -35,6 +36,7 @@ class LogInScreen extends StatelessWidget {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
         if(state is SuccessUserLoginState){
+          LayoutCubit.get(context).changeIndexScreen(0);
          pushReplacement(context, const LayoutScreen());
         }
         if(state is ErrorUserLoginState){
