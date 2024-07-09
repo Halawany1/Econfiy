@@ -2,7 +2,6 @@
 ![Econfiy](https://github.com/Halawany1/Econfiy/assets/96886506/1bcd645b-5a06-4c28-8d4d-e5a600095d11)
 
 Welcome to the Econfiy App repository! This Flutter app is designed to provide a seamless e-commerce experience, featuring API handling, authentication, shared preferences, animations, and more.
-#### [Video](https://www.linkedin.com/posts/mohamed-elhalawany-329314220_ecommerce-flutter-dart-activity-7105259895544791040-_FuR?utm_source=share&utm_medium=member_desktop)
 
 ## Table of Contents
 1. [Overview](#overview)
